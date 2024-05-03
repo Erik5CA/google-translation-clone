@@ -28,6 +28,13 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #3f3f3f;
+  color: white;
+}
+
+textarea::placeholder {
+  color: rgb(148, 148, 148) !important;
+  resize: none !important;
 }
 
 h1 {
