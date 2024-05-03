@@ -45,6 +45,9 @@ export async function translate({
     if (fromLanguage === "auto") {
       const url = baseUrl + "/detect";
       const detectedLanguage = await detectLanguage(url);
+      if (detectedLanguage === toLanguage) {
+        return textToTranslate;
+      }
       options.body = JSON.stringify({
         q: textToTranslate,
         source: detectedLanguage,
