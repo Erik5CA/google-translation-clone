@@ -23,6 +23,7 @@ function LanguageSelector({ onChange, value, type }: Props) {
       aria-label="Selecciona el idioma"
       onChange={handleChange}
       value={value}
+      className="bg-dark text-white"
     >
       {type === SectionType.From && (
         <option value={AUTO_LANGUAGE}>Detectar Idioma</option>
