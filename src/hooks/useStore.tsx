@@ -15,28 +15,30 @@ function reducer(state: State, action: Actions) {
   switch (type) {
     case "INTERCHANGE_LANGUAGES":
       if (state.fromLanguage === AUTO_LANGUAGE) return state;
+      if (state.fromLanguage === state.toLanguage) return state;
       return {
         ...state,
         fromLanguage: state.toLanguage,
         toLanguage: state.fromLanguage,
-        loading: state.text === "",
+        loading: !(state.text === ""),
+        text: state.result,
         result: "",
       };
     case "CHANGE_FROM_LANGUAGE":
-      if (state.fromLanguage === action.payload) return state;
+      // if (state.fromLanguage === action.payload) return state;
       return {
         ...state,
         fromLanguage: action.payload,
-        loading: state.text === "",
+        loading: !(state.text === ""),
         result: "",
       };
     case "CHANGE_TO_LANGUAGE":
-      if (state.fromLanguage === action.payload) return state;
+      // if (state.fromLanguage === action.payload) return state;
 
       return {
         ...state,
         toLanguage: action.payload,
-        loading: state.text === "",
+        loading: !(state.text === ""),
         result: "",
       };
     case "CHANGE_TEXT":
