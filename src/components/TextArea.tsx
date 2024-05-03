@@ -8,7 +8,13 @@ interface Props {
   value: string;
 }
 
-const CommonStyles = { border: 0, height: "200px" };
+const CommonStyles = {
+  minHeight: "200px",
+  height: "max-content",
+  width: "100%",
+  padding: "20px",
+  fontSize: "large",
+};
 
 const getPlaceholder = ({
   type,
@@ -18,7 +24,7 @@ const getPlaceholder = ({
   loading?: boolean;
 }) => {
   if (type === SectionType.From) return "Introducir texto";
-  if (loading === true) return "Cargando...";
+  if (loading === true) return "Traduciendo...";
   return "Traducción";
 };
 
@@ -26,7 +32,7 @@ function TextArea({ loading, type, value, onChange }: Props) {
   const styles =
     type === SectionType.From
       ? CommonStyles
-      : { ...CommonStyles, backgroundColor: "#f5f5f5" };
+      : { ...CommonStyles, backgroundColor: "#f5f5f5", border: 0 };
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     onChange(event.target.value);
@@ -34,6 +40,7 @@ function TextArea({ loading, type, value, onChange }: Props) {
 
   return (
     <Form.Control
+      className="bg-dark text-white"
       as="textarea"
       placeholder={getPlaceholder({ type, loading })}
       autoFocus={type === SectionType.From}
