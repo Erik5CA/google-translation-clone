@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useStore } from "./hooks/useStore";
 import { Container, Row, Col, Button, Stack } from "react-bootstrap";
 import { AUTO_LANGUAGE } from "./constants";
-import { ArrowsIcon } from "./components/Icons";
+import { ArrowsIcon, CopyIcon, SpeakerIcon } from "./components/Icons";
 import LanguageSelector from "./components/LanguageSelector";
 import { SectionType } from "./type.d";
 import TextArea from "./components/TextArea";
@@ -40,6 +40,16 @@ function App() {
     if (debounceText === "") return;
     handleTranslate(debounceText);
   }, [debounceText, toLanguage, fromLanguage]);
+
+  const handleClipboad = () => {
+    navigator.clipboard.writeText(result).catch(() => {});
+  };
+
+  const handleSpeak = () => {
+    const msg = new SpeechSynthesisUtterance(result);
+    msg.lang = toLanguage;
+    speechSynthesis.speak(msg);
+  };
 
   return (
     <Container fluid>
@@ -78,18 +88,32 @@ function App() {
               value={toLanguage}
               onChange={changeToLanguage}
             />
-            <TextArea
-              type={SectionType.To}
-              value={result}
-              onChange={changeResult}
-              loading={loading}
-            />
+            <div style={{ position: "relative" }}>
+              <TextArea
+                type={SectionType.To}
+                value={result}
+                onChange={changeResult}
+                loading={loading}
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  display: "flex",
+                }}
+              >
+                <Button variant="link" onClick={handleClipboad}>
+                  <CopyIcon />
+                </Button>
+                <Button variant="link" onClick={handleSpeak}>
+                  <SpeakerIcon />
+                </Button>
+              </div>
+            </div>
           </Stack>
         </Col>
       </Row>
-      {/* <Button onClick={() => handleTranslate(debounceText)}>
-        Translate
-      </Button> */}
     </Container>
   );
 }
